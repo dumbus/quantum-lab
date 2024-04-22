@@ -3,6 +3,7 @@ from qiskit import *
 from qiskit.providers.basic_provider import BasicSimulator
 
 REG_SIZE = 2
+SHOTS = 1000
 
 # initialize quantum register
 q_reg = QuantumRegister(size=REG_SIZE, name='q_reg')
@@ -25,7 +26,7 @@ plt.show()
 
 # ======================= Local Simulation =======================
 backend = BasicSimulator()
-result = backend.run(qc).result()
+result = backend.run(qc, shots=SHOTS).result()
 
 bit_strings = result.get_counts()
 print(bit_strings)
