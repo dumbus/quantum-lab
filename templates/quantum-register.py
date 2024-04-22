@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 from qiskit import *
 
-QUANTUM_REG_SIZE = 8
+# backend = BasicAer.get_backend('qasm_simulator')
 
-values = []
+QUANTUM_REG_SIZE = 5 # FakeManillaV2 have 5 qubits
 
 # initialize quantum register
 q_reg = QuantumRegister(size=QUANTUM_REG_SIZE, name='q_reg')
