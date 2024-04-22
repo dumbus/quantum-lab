@@ -1,7 +1,6 @@
 # Bell state
 
 import matplotlib.pyplot as plt
-
 from qiskit import QuantumCircuit
  
 # Create a new circuit with two qubits
