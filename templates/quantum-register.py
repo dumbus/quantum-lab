@@ -1,24 +1,23 @@
 import matplotlib.pyplot as plt
 from qiskit import *
+from qiskit.providers.basic_provider import BasicSimulator
 
-# backend = BasicAer.get_backend('qasm_simulator')
-
-QUANTUM_REG_SIZE = 5 # FakeManillaV2 have 5 qubits
+REG_SIZE = 2
 
 # initialize quantum register
-q_reg = QuantumRegister(size=QUANTUM_REG_SIZE, name='q_reg')
+q_reg = QuantumRegister(size=REG_SIZE, name='q_reg')
 
 # initialize classical register
-c_reg = ClassicalRegister(size=1, name='c_reg')
+c_reg = ClassicalRegister(size=REG_SIZE, name='c_reg')
 
 # initialize quantum curcuit with quantum register
 qc = QuantumCircuit(q_reg, c_reg)
 
 # Apply H gate to all qubits of q_reg
 # Measure all qubits of q_reg
-for qubit_number in range(QUANTUM_REG_SIZE):
+for qubit_number in range(REG_SIZE):
     qc.h(q_reg[qubit_number])
-    qc.measure(q_reg[qubit_number], c_reg[0])
+    qc.measure(q_reg[qubit_number], c_reg[qubit_number])
 
 # print curcuit
 qc.draw(output="mpl")
