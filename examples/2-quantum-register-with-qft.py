@@ -2,9 +2,8 @@ import matplotlib.pyplot as plt
 from numpy import pi
 
 from qiskit import *
-from qiskit.providers.basic_provider import BasicSimulator
 
-REG_SIZE = 3
+REG_SIZE = 5
 SHOTS = 1000
 
 # initialize quantum register
@@ -49,10 +48,3 @@ qft(qc, REG_SIZE)
 
 qc.draw(output="mpl")
 plt.show()
-
-# ======================= Local Simulation =======================
-# backend = BasicSimulator()
-# result = backend.run(qc, shots=SHOTS).result()
-
-# bit_strings = result.get_counts()
-# print(bit_strings)
