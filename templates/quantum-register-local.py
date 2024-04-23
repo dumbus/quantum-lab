@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from qiskit import *
 from qiskit.providers.basic_provider import BasicSimulator
 
-REG_SIZE = 2
+REG_SIZE = 5
 SHOTS = 1000
 
 # initialize quantum register
@@ -18,7 +18,9 @@ qc = QuantumCircuit(q_reg, c_reg)
 # Measure all qubits of q_reg
 for qubit_number in range(REG_SIZE):
     qc.h(q_reg[qubit_number])
-    qc.measure(q_reg[qubit_number], c_reg[qubit_number])
+
+# Measure all qubits of q_reg to c_reg
+qc.measure(q_reg, c_reg)
 
 # print curcuit
 qc.draw(output="mpl")
