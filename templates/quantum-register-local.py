@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+
 from qiskit import *
 from qiskit.providers.basic_provider import BasicSimulator
 
@@ -15,10 +16,7 @@ c_reg = ClassicalRegister(size=REG_SIZE, name='c_reg')
 qc = QuantumCircuit(q_reg, c_reg)
 
 # Apply H gate to all qubits of q_reg
-# Measure all qubits of q_reg
-for qubit_number in range(REG_SIZE):
-    qc.h(q_reg[qubit_number])
-
+qc.h(q_reg)
 # Measure all qubits of q_reg to c_reg
 qc.measure(q_reg, c_reg)
 
