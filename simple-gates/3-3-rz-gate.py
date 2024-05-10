@@ -10,9 +10,12 @@ from qiskit_aer import AerSimulator
 
 SHOTS = 2000
 
-q_reg = QuantumRegister(size=3, name='q_reg')
-c_reg = ClassicalRegister(size=3, name='c_reg')
+q_reg = QuantumRegister(size=2, name='q_reg')
+c_reg = ClassicalRegister(size=2, name='c_reg')
 qc = QuantumCircuit(q_reg, c_reg)
+
+# Set q_reg[1] to |1>
+qc.h(q_reg[1])
 
 # Draw state of Qubits on Bloch Sphere before experiment
 state = Statevector(qc)
@@ -20,15 +23,13 @@ plot = plot_bloch_multivector(state, title='Initital State', title_pad=-3)
 plot.show()
 
 # Apply Rx gate to q_reg[0]
-qc.rx(pi/2, q_reg[0])
-# Apply Ry gate to q_reg[1]
-qc.ry(pi/2, q_reg[1])
-# Apply Rz gate to q_reg[2]
-qc.rz(pi/2, q_reg[2])
+qc.rz(pi/2, q_reg[0])
+# Apply Rx gate to q_reg[1]
+qc.rz(pi/2, q_reg[1])
 
-# Draw state of Qubits on Bloch Sphere after Z-gate
+# Draw state of Qubits on Bloch Sphere after Rx-gate
 state = Statevector(qc)
-plot = plot_bloch_multivector(state, title='State after rotation', title_pad=-3)
+plot = plot_bloch_multivector(state, title='State after rotation around Z-axis', title_pad=-3)
 plot.show()
 
 # Show circuit
@@ -37,9 +38,9 @@ qc.draw(output="mpl")
 plt.show()
 
 # ======================= Local Simulation =======================
-# service = QiskitRuntimeService()
-# backend = service.get_backend('ibm_kyoto')
-# backend_sim = AerSimulator.from_backend(backend)
-# result = backend_sim.run(qc, shots=SHOTS).result()
-# counts = result.get_counts(qc)
-# print(counts)
+service = QiskitRuntimeService()
+backend = service.get_backend('ibm_kyoto')
+backend_sim = AerSimulator.from_backend(backend)
+result = backend_sim.run(qc, shots=SHOTS).result()
+counts = result.get_counts(qc)
+print(counts)
