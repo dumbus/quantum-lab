@@ -3,7 +3,7 @@ from numpy import pi
 
 from qiskit import *
 from qiskit.quantum_info import Statevector
-from qiskit.visualization import plot_bloch_multivector
+from qiskit.visualization import plot_bloch_multivector, plot_histogram
 
 from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit_aer import AerSimulator
@@ -46,4 +46,5 @@ backend_sim = AerSimulator.from_backend(backend)
 transpiled_circuit = transpile(qc, backend_sim)
 result = backend_sim.run(transpiled_circuit, shots=SHOTS).result()
 counts = result.get_counts()
-print(counts)
+plot_histogram(counts, title='Qubits State', figsize=(8, 7))
+plt.show()
