@@ -36,6 +36,17 @@ qc.measure(q_reg, c_reg)
 qc.draw(output="mpl")
 plt.show()
 
+# ======================= Ideal Simulation =======================
+def ideal_hadamard_distribution(shots):
+  # Since a Hadamard gate creates a superposition with equal probabilities
+  return {'0': shots // 2, '1': shots // 2}
+
+# Get the ideal distribution for 1000 shots
+ideal_counts = ideal_hadamard_distribution(SHOTS)
+
+# Visualize the ideal counts
+plot_histogram(ideal_counts, title='Qubits State (ideal simulation)', figsize=(8, 7))
+
 # ======================= Local Simulation =======================
 # get a real backend from the runtime service
 service = QiskitRuntimeService()
@@ -44,9 +55,9 @@ backend = service.get_backend('ibm_kyoto')
 # generate a simulator that mimics the real quantum system with the latest calibration results
 backend_sim = AerSimulator.from_backend(backend)
  
-# Run the transpiled circuit using the simulated backend
-result = backend_sim.run(qc, shots=SHOTS).result()
-counts = result.get_counts()
+# Run the circuit using the simulated backend
+simulation_result = backend_sim.run(qc, shots=SHOTS).result()
+simulation_counts = simulation_result.get_counts()
 
-plot_histogram(counts, title='Qubits State', figsize=(8, 7))
+plot_histogram(simulation_counts, title='Qubits State (realistic simulation)', figsize=(8, 7))
 plt.show()

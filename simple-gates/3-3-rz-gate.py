@@ -10,12 +10,12 @@ from qiskit_aer import AerSimulator
 
 SHOTS = 2000
 
-q_reg = QuantumRegister(size=2, name='q_reg')
-c_reg = ClassicalRegister(size=2, name='c_reg')
+q_reg = QuantumRegister(size=1, name='q_reg')
+c_reg = ClassicalRegister(size=1, name='c_reg')
 qc = QuantumCircuit(q_reg, c_reg)
 
-# Set q_reg[1] to |1>
-qc.h(q_reg[1])
+# Set q_reg[0] to Superposition
+qc.h(q_reg[0])
 
 # Draw state of Qubits on Bloch Sphere before experiment
 state = Statevector(qc)
@@ -24,8 +24,6 @@ plot.show()
 
 # Apply Rx gate to q_reg[0]
 qc.rz(pi/2, q_reg[0])
-# Apply Rx gate to q_reg[1]
-qc.rz(pi/2, q_reg[1])
 
 # Draw state of Qubits on Bloch Sphere after Rx-gate
 state = Statevector(qc)
@@ -36,6 +34,13 @@ plot.show()
 qc.measure(q_reg, c_reg)
 qc.draw(output="mpl")
 plt.show()
+
+# ======================= Ideal Simulation =======================
+def ideal_rz_distribution(shots):
+  return {'0': shots // 2, '1': shots // 2}
+
+ideal_counts = ideal_rz_distribution(SHOTS)
+plot_histogram(ideal_counts, title='Qubits State (ideal simulation)', figsize=(8, 7))
 
 # ======================= Local Simulation =======================
 service = QiskitRuntimeService()

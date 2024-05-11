@@ -37,6 +37,13 @@ qc.measure(q_reg, c_reg)
 qc.draw(output="mpl")
 plt.show()
 
+# ======================= Ideal Simulation =======================
+def ideal_ry_distribution(shots):
+  return {'00': shots // 4, '01': shots // 4, '10': shots // 4, '11': shots // 4}
+
+ideal_counts = ideal_ry_distribution(SHOTS)
+plot_histogram(ideal_counts, title='Qubits State (ideal simulation)', figsize=(8, 7))
+
 # ======================= Local Simulation =======================
 service = QiskitRuntimeService()
 backend = service.get_backend('ibm_kyoto')

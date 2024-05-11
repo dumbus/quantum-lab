@@ -13,18 +13,19 @@ q_reg = QuantumRegister(size=2, name='q_reg')
 c_reg = ClassicalRegister(size=2, name='c_reg')
 qc = QuantumCircuit(q_reg, c_reg)
 
+qc.x(q_reg[1])
+
 # Draw state of Qubits on Bloch Sphere before experiment
 state = Statevector(qc)
 plot = plot_bloch_multivector(state, title='Initital State', title_pad=-3)
 plot.show()
 
-# Apply x gate to first qubit of q_reg
+# Apply x gate to first qubit of q_reg: |0>
 qc.x(q_reg[0])
-# Apply x gate to second qubit twice
-qc.x(q_reg[1])
+# Apply x gate to second qubit of q_reg: |1>
 qc.x(q_reg[1])
 
-# Draw state of Qubits on Bloch Sphere after Rx-gate
+# Draw state of Qubits on Bloch Sphere after X-gate
 state = Statevector(qc)
 plot = plot_bloch_multivector(state, title='State after X-Gate', title_pad=-3)
 plot.show()
@@ -32,6 +33,13 @@ plot.show()
 qc.measure(q_reg, c_reg)
 qc.draw(output="mpl")
 plt.show()
+
+# ======================= Ideal Simulation =======================
+def ideal_not_distribution(shots):
+  return {'00': 0, '01': shots, '10': 0, '11': 0}
+
+ideal_counts = ideal_not_distribution(SHOTS)
+plot_histogram(ideal_counts, title='Qubits State (ideal simulation)', figsize=(8, 7))
 
 # ======================= Local Simulation =======================
 service = QiskitRuntimeService()
