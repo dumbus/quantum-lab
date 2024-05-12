@@ -4,14 +4,16 @@ from numpy import pi
 from qiskit import *
 from qiskit.quantum_info import Statevector
 from qiskit.visualization import plot_bloch_multivector, plot_histogram
+from qiskit.providers.fake_provider import GenericBackendV2
 
 from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit_aer import AerSimulator
 
 SHOTS = 2000
+REG_SIZE = 1
 
-q_reg = QuantumRegister(size=1, name='q_reg')
-c_reg = ClassicalRegister(size=1, name='c_reg')
+q_reg = QuantumRegister(size=REG_SIZE, name='q_reg')
+c_reg = ClassicalRegister(size=REG_SIZE, name='c_reg')
 qc = QuantumCircuit(q_reg, c_reg)
 
 # Set q_reg[0] to Superposition
@@ -42,11 +44,17 @@ def ideal_rz_distribution(shots):
 ideal_counts = ideal_rz_distribution(SHOTS)
 plot_histogram(ideal_counts, title='Qubits State (ideal simulation)', figsize=(8, 7))
 
-# ======================= Local Simulation =======================
-service = QiskitRuntimeService()
-backend = service.get_backend('ibm_kyoto')
-backend_sim = AerSimulator.from_backend(backend)
-result = backend_sim.run(qc, shots=SHOTS).result()
-counts = result.get_counts(qc)
-plot_histogram(counts, title='Qubits State', figsize=(8, 7))
+# ======================= Local Simulation (Real QC backend copy) =======================
+# service = QiskitRuntimeService()
+# backend = service.get_backend('ibm_kyoto')
+# backend_sim = AerSimulator.from_backend(backend)
+# simulation_result = backend_sim.run(qc, shots=SHOTS).result()
+# simulation_counts = result.get_counts()
+
+# ======================= Local Simulation (Generic backend) =======================
+backend_local = GenericBackendV2(num_qubits = REG_SIZE * 2)
+simulation_result = backend_local.run(qc, shots=SHOTS).result()
+simulation_counts = simulation_result.get_counts()
+
+plot_histogram(simulation_counts, title='Qubits State (realistic simulation)', figsize=(8, 7))
 plt.show()
