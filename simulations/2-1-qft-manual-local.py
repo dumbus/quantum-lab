@@ -54,16 +54,16 @@ qc.draw(output="mpl")
 plt.show()
 
 # ======================= Local Simulation =======================
-# get a real backend from the runtime service
-service = QiskitRuntimeService()
-backend = service.get_backend('ibm_kyoto')
+# # get a real backend from the runtime service
+# service = QiskitRuntimeService()
+# backend = service.get_backend('ibm_kyoto')
 
-# generate a simulator that mimics the real quantum system with the latest calibration results
-backend_sim = AerSimulator.from_backend(backend)
+# # generate a simulator that mimics the real quantum system with the latest calibration results
+# backend_sim = AerSimulator.from_backend(backend)
 
-# Transpile the ideal circuit to a circuit that can be directly executed by the backend
-transpiled_circuit = transpile(qc, backend_sim)
+# # Transpile the ideal circuit to a circuit that can be directly executed by the backend
+# transpiled_circuit = transpile(qc, backend_sim)
  
-# Run the transpiled circuit using the simulated backend
-job = backend_sim.run(transpiled_circuit)
-counts = job.result().get_counts()
+# # Run the transpiled circuit using the simulated backend
+# job = backend_sim.run(transpiled_circuit)
+# counts = job.result().get_counts()

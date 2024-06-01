@@ -1,4 +1,3 @@
-import random
 import matplotlib.pyplot as plt
 
 from qiskit import *
@@ -73,13 +72,9 @@ elif (student_id >= 11 and student_id <= 20):
   # Block 1
   qc.x(q_reg_y[3])
 
-  qc.barrier()
-
   # Block 2
   qc.cx(q_reg_x[1], q_reg_y[3])
   qc.cx(q_reg_x[1], q_reg_y[2])
-
-  qc.barrier()
 
   # Block 3
   qc.ccx(q_reg_x[0], q_reg_y[0], q_reg_y[2])
